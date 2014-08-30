@@ -20,6 +20,6 @@ RUN  ./cpanm Time::HiRes
 RUN  ./cpanm Test::Most
 RUN  ./cpanm CGI
 RUN  ./cpanm Dancer2
-RUN  dancer -a test_app
+RUN  dancer2 gen -a test_app
 
 WORKDIR  /test_app
