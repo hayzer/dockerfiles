@@ -1,6 +1,6 @@
 # dancer2
 #
-# VERSION		0.0.2
+# VERSION		0.0.3
 
 FROM 	centos:centos7
 MAINTAINER  Thomas Maier "hayzer@gmail.com"
@@ -25,7 +25,3 @@ RUN  ./cpanm Dancer
 RUN  dancer -a test_app
 
 WORKDIR  /test_app
-
-# CMD ["bin/app.pl","--daemon"]
-
-EXPOSE  3000
