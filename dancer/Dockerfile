@@ -1,4 +1,4 @@
-# dancer2
+# dancer
 #
 # VERSION		0.0.3
 
