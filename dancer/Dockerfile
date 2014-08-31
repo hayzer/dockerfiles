@@ -1,6 +1,6 @@
 # dancer
 #
-# VERSION		0.0.3
+# VERSION		0.0.6
 
 FROM 	centos:centos7
 MAINTAINER  Thomas Maier "hayzer@gmail.com"
@@ -9,19 +9,25 @@ MAINTAINER  Thomas Maier "hayzer@gmail.com"
 RUN  curl -LO http://xrl.us/cpanm
 RUN  chmod +x ./cpanm
 
-# install dancer2
-RUN  yum install -y perl-CPAN
-RUN  yum install -y make
-RUN  yum install -y cpp
-RUN  yum install -y gcc
-RUN  yum install -y tar
-RUN  ./cpanm Clone
-RUN  ./cpanm Time::HiRes
-RUN  ./cpanm Test::Most
-RUN  ./cpanm CGI
-RUN  ./cpanm Env
-RUN  ./cpanm YAML
-RUN  ./cpanm Dancer
-RUN  dancer -a test_app
+# install dancer
+RUN  yum install -y perl-CPAN \
+                    make      \
+                    cpp       \
+                    gcc       \
+                    tar
+RUN  ./cpanm Clone       \
+			 Time::HiRes \
+			 Test::Most  \
+			 CGI         \
+			 Env         \
+			 YAML        \
+			 HTTP::Server::Simple::PSGI
 
-WORKDIR  /test_app
+RUN  ./cpanm Dancer
+RUN  groupadd -r dancer -g 433
+RUN  useradd -u 431 -r -g dancer -d /home/dancer -s /sbin/nologin -c "Dancer user" dancer
+RUN  mkdir /home/dancer
+RUN  cd /home/dancer;dancer -a test_app
+RUN  chown -R dancer:dancer /home/dancer
+USER dancer
+WORKDIR  /home/dancer/test_app
